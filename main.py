@@ -12,6 +12,9 @@ fig = go.Figure(data=[
     go.Bar(name='febrero', x=df['Delitos'], y=df['febrero'])
 ])
 
+fig2 = go.Figure(data=[go.Pie(labels=df['Delitos'], values=df['enero'])])
+
+
 app = dash.Dash(__name__)
 
 app.layout = html.Div(children=[
@@ -19,6 +22,10 @@ app.layout = html.Div(children=[
     dcc.Graph(
         id='delitos-graph',
         figure=fig
+    ),
+    dcc.Graph(
+        id='delitos2-graph',
+        figure=fig2
     )
 ])
 
