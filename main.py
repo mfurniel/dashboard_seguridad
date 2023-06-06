@@ -3,14 +3,15 @@ import plotly.graph_objects as go
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
+import plotly.express as px
+import plotly.io as pio
 
 
 df = pd.read_excel('dataset/2022seguridad.xlsx')
+df_melted = pd.melt(df, var_name='Mes', value_name='Valor')
 
-fig = go.Figure(data=[
-    go.Bar(name='enero', x=df['Delitos'], y=df['enero']),
-    go.Bar(name='febrero', x=df['Delitos'], y=df['febrero'])
-])
+fig = px.pie(df, values='diciembre', names='Delitos')
+
 
 app = dash.Dash(__name__)
 
@@ -22,4 +23,5 @@ app.layout = html.Div(children=[
     )
 ])
 
-df = pd.read_excel('dataset/delitos2022pormes.xlsx')
+if __name__ == '__main__':
+    app.run_server(debug=True)
