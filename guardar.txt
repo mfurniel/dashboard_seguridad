@@ -1,0 +1,60 @@
+import dash
+from dash import Dash, html
+from dash.dependencies import Input, Output, State
+
+app = dash.Dash(__name__)
+
+# Crear el diseño de la aplicación
+app.layout = html.Div([
+    # Barra superior
+    html.Link(href='assets/test.css', rel='stylesheet'),
+
+    html.Div([
+        html.Link(href='test.css', rel='stylesheet'),
+        html.Div([html.H1('Dataviz Security'),
+                html.Button(id='lateral', className='lateral')], className='logo'),
+        
+        html.A('NACIONAL', href='#', className='opcion lateral'),
+        html.A('REGIONES', href='#', className='opcion lateral'),
+        html.A('DELITOS', href='#', className='opcion lateral'),
+        html.A('VARIOS', href='#', className='opcion lateral')
+    ], className='barra-superior'),
+
+    # html.Div(id='sidebar', children=[
+    #     html.P('Texto 1'),  
+    #     html.P('Texto 2'),
+    #     html.P('Texto 3'),
+    # ], className='custom-sidebar', style={'transform': 'translateX(-200px)'}),  # Estilo inicial para ocultar la barra lateral
+
+])
+
+# @app.callback(Output('sidebar', 'style'), [Input('lateral', 'n_clicks')], [State('sidebar', 'style')])
+# def toggle_sidebar(n_clicks, sidebar_style):
+#     if n_clicks is None:
+#         return sidebar_style
+#     elif n_clicks % 2 == 0:
+#         return {'transform': 'translateX(-250px)'}
+#     else:
+#         return {'transform': 'translateX(0)'}
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+
+
+ html.Div([
+        html.Div([
+            html.H1(children='Homicidios 2022 a Nivel Nacional'),
+            dcc.Graph(
+                id='delitos-graph',
+                figure=fig
+            ),
+        ], className='col-6'),
+
+        html.Div([
+            html.H1(children='Homicidios 2022 Region Metropolitana'),
+            dcc.Graph(
+                id='delitos-graph',
+                figure=fig
+            ),
+        ], className='col-6')
+    ], className='row')
