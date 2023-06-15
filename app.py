@@ -19,17 +19,6 @@ import graficas as graf
 #     )
 #     return fig
 
-
-
-
-
-    
-
-# Cargar los datos
-
-
-
-
 # Configuración de la aplicación Dash
 app = dash.Dash(__name__)
 
@@ -71,7 +60,7 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Graph(
                         id='delitos-graph',
-                        figure=graf.lineChartCDDA(0,nConst.DELITOS[nConst.GRUPOS_DELITOS[0]][0])
+                        figure=graf.lineChartCDDA(0,nConst.DELITOS[nConst.GRUPOS_DELITOS[0]][5])
                     ),
                 className='nacional1'),
                 html.Div('Contenido graf 2 nacion', className='nacional2')
