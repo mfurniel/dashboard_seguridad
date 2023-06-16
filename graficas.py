@@ -92,3 +92,28 @@ def lineChartCDDA(numero_territorio,delito_buscado):
     )
     return fig
 
+def ciruclarHvsM(año,tipo):
+    df = pd.read_excel('dataset/nacional/sexo_edad_nacional.xlsx')
+    filtro = (df['Tipo Participante'] == tipo) & (df['Sexo'] == 'MUJER') & (df['Edad'] == 'Total')
+    fila_filtrada = df[filtro]
+    valorM = fila_filtrada[año].values[0]
+    filtro = (df['Tipo Participante'] == tipo) & (df['Sexo'] == 'HOMBRE') & (df['Edad'] == 'Total')
+    fila_filtrada = df[filtro]
+    valorH = fila_filtrada[año].values[0]
+    # Etiquetas para las categorías
+    labels = ['Hombres', 'Mujeres']
+
+    # Valores para cada categoría
+    values = [valorH, valorM]
+
+    # Crear el gráfico circular
+    fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
+
+    # Personalizar el diseño
+    fig.update_traces(hole=0.4, hoverinfo="label+percent+value")
+
+    # Añadir título
+    fig.update_layout(title_text= tipo + " Hombres vs Mujeres todos los Delitos Año "+año)
+
+    # Mostrar el gráfico
+    return fig

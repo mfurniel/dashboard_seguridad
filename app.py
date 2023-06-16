@@ -73,7 +73,11 @@ app.layout = html.Div([
                         figure=graf.lineChartCDDA(0,nConst.DELITOS_CON_GRUPOS[nConst.GRUPOS_DELITOS[0]][5])
                     ),
                 className='nacional1'),
-                html.Div('Contenido graf 2 nacion', className='nacional2')
+                html.Div([ 
+                    dcc.Graph(
+                            id='barrasDelitosNacional',
+                            figure=graf.ciruclarHvsM('2022','VICTIMA')
+                    ),], className='nacional2')
             ], className='fila'),
             # Fila 2
             html.Div([
