@@ -4,23 +4,56 @@ import plotly.graph_objects as go
 
 #Grefica Top X Delitos o Grupos Delictuales
 
-def barrasDelitosNacional():
+def barrasDelitosNacional(ascendente,grupo):
      
-    df = pd.read_excel(nConst.EXCEL_PATH[0])
-    df = df.set_index('GRUPO DELICTUAL / DELITO')
+    # Leer el archivo de Excel especificado en nConst.EXCEL_PATH[0] y almacenar los datos en un DataFrame
+    df = pd.read_excel(nConst.EXCEL_PATH[0]) # nConst.EXCEL_PATH[0] es 'nacional'
     
-    # Configuración del segundo gráfico
+    # Establecer la columna 'GRUPO DELICTUAL / DELITO' como índice del DataFrame
+    df = df.set_index('GRUPO DELICTUAL / DELITO')
+    if grupo:
+        df = df[~df.index.isin(nConst.GRUPOS_DELITOS)]
+    else:
+        df = df[~df.index.isin(nConst.DELITOS)]
+   
+    # Copiar el DataFrame original para realizar modificaciones sin afectar los datos originales
     df_aux = df.copy()
+    
+    # Agregar una columna 'Total' que contenga la suma de todas las filas
     df_aux['Total'] = df_aux.sum(axis=1)
-    df_aux = df_aux.sort_values("Total", ascending=False)
+
+    # Ordenar el DataFrame en función de los valores de la columna 'Total' de forma descendente
+    df_aux = df_aux.sort_values("Total", ascending=ascendente)
+    
+    # Obtener una lista de los cinco delitos más comunes
     listadelitos = df_aux.index[:5].tolist()
+    
+    # Obtener los valores correspondientes a los cinco delitos más comunes en la columna 'Total'
     valores_primeros_cinco = df_aux.loc[df_aux.index[:5], 'Total']
+    
+    # Crear el objeto de la figura del gráfico de barras utilizando la biblioteca plotly.graph_objects
     fig = go.Figure(data=go.Bar(x=listadelitos, y=valores_primeros_cinco, width=0.3))
+    
+    # Configurar el diseño del gráfico, incluyendo título y etiquetas de los ejes
+    grupo_o_delito=''
+    if grupo:
+        grupo_o_delito='Delitos'
+    else:
+        grupo_o_delito='Grupos de Delitos'
+
+    cometidos=''
+    if ascendente:
+        cometidos='menos'
+    else:
+        cometidos='más'
+
     fig.update_layout(
-        title='Top 5 delitos en el año 2022',
+        title='Top 5 ' + grupo_o_delito + ' ' + cometidos +' Cometidos (2005-2022)',
         xaxis=dict(title='Delitos'),
         yaxis=dict(title='Cantidad cometida')
     )
+    
+    # Devolver la figura del gráfico generada
     return fig
 
 # Grafico LineChart Nacional o Regional se ocupa la misma funcion

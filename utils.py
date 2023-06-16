@@ -2,7 +2,7 @@
 GRUPOS_DELITOS=[
     'Delitos de mayor connotación social',
     'Infracción a ley de armas',
-    'Incivilidades'
+    'Incivilidades',
     'Abigeato',
     'Abusos sexuales y otros delitos sexuales',
     'Violencia intrafamiliar',
@@ -12,7 +12,7 @@ GRUPOS_DELITOS=[
 
 
 
-DELITOS = {
+DELITOS_CON_GRUPOS = {
         'Delitos de mayor connotación social': [
             'Homicidios',
             'Hurtos',
@@ -57,6 +57,43 @@ DELITOS = {
         'Receptación': [],
         'Robo frustrado': [],
     }
+
+DELITOS = [
+    'Homicidios',
+    'Hurtos',
+    'Lesiones leves',
+    'Lesiones menos graves, graves o gravísimas',
+    'Otros robos con fuerza',
+    'Robo con violencia o intimidación',
+    'Robo de objetos de o desde vehículo',
+    'Robo de vehículo motorizado',
+    'Robo en lugar habitado',
+    'Robo en lugar no habitado',
+    'Robo por sorpresa',
+    'Violaciones',
+    'Abandono de armas',
+    'Hallazgo de armas o explosivos',
+    'Otros ley de armas',
+    'Porte de armas',
+    'Tenencia ilegal de armas o explosivos',
+    'Amenazas',
+    'Comercio ambulante o clandestino',
+    'Consumo alcohol vía pública',
+    'Daños',
+    'Desórdenes',
+    'Ebriedad',
+    'Otras incivilidades',
+    'Riña pública',
+    'Ruidos molestos',
+    'Violencia intrafamiliar a adulto mayor',
+    'Violencia intrafamiliar a hombre',
+    'Violencia intrafamiliar a mujer',
+    'Violencia intrafamiliar a niño',
+    'Violencia intrafamiliar no clasificado',
+    'Receptación',
+    'Robo frustrado'
+]
+
 
 SUBCATEGORIAS =[
     'casospoliciales',
@@ -107,3 +144,66 @@ TERRITORIO = [
 
 
 # print(DELITOS[GRUPOS_DELITOS[0]][0]) #output homicidios
+
+OPCIONES_DELITOS = [
+    {'label': 'Delitos de mayor connotación social','value': 'delitos de mayor connotación social'},
+    {'label':'Infracción a ley de armas','value': 'infracción a ley de armas'},
+    {'label':'Incivilidades','value': 'incivilidades'},
+    {'label':'Abigeato','value': 'abigeato'},
+    {'label':'Abusos sexuales y otros delitos sexuales','value': 'abusos sexuales y otros delitos sexuales'},
+    {'label':'Violencia intrafamiliar','value': 'violencia intrafamiliar'},
+    {'label':'Receptación','value': 'receptación'},
+    {'label':'Robo frustrado','value': 'robo frustrado'},
+    {'label': 'Homicidios', 'value': 'homicidios'},
+    {'label': 'Hurtos', 'value': 'hurtos'},
+    {'label': 'Lesiones leves', 'value': 'lesiones_leves'},
+    {'label': 'Lesiones menos graves, graves o gravísimas', 'value': 'lesiones_graves'},
+    {'label': 'Otros robos con fuerza', 'value': 'otros_robos_fuerza'},
+    {'label': 'Robo con violencia o intimidación', 'value': 'robo_violencia'},
+    {'label': 'Robo de objetos de o desde vehículo', 'value': 'robo_objetos_vehiculo'},
+    {'label': 'Robo de vehículo motorizado', 'value': 'robo_vehiculo'},
+    {'label': 'Robo en lugar habitado', 'value': 'robo_lugar_habitado'},
+    {'label': 'Robo en lugar no habitado', 'value': 'robo_lugar_no_habitado'},
+    {'label': 'Robo por sorpresa', 'value': 'robo_sorpresa'},
+    {'label': 'Violaciones', 'value': 'violaciones'},
+    {'label': 'Abandono de armas', 'value': 'abandono_armas'},
+    {'label': 'Hallazgo de armas o explosivos', 'value': 'hallazgo_armas_explosivos'},
+    {'label': 'Otros ley de armas', 'value': 'otros_ley_armas'},
+    {'label': 'Porte de armas', 'value': 'porte_armas'},
+    {'label': 'Tenencia ilegal de armas o explosivos', 'value': 'tenencia_ilegal_armas_explosivos'},
+    {'label': 'Amenazas', 'value': 'amenazas'},
+    {'label': 'Comercio ambulante o clandestino', 'value': 'comercio_ambulante_clandestino'},
+    {'label': 'Consumo alcohol vía pública', 'value': 'consumo_alcohol_via_publica'},
+    {'label': 'Daños', 'value': 'danios'},
+    {'label': 'Desórdenes', 'value': 'desordenes'},
+    {'label': 'Ebriedad', 'value': 'ebriedad'},
+    {'label': 'Otras incivilidades', 'value': 'otras_incivilidades'},
+    {'label': 'Riña pública', 'value': 'rina_publica'},
+    {'label': 'Ruidos molestos', 'value': 'ruidos_molestos'},
+    {'label': 'Violencia intrafamiliar a adulto mayor', 'value': 'violencia_intrafamiliar_adulto_mayor'},
+    {'label': 'Violencia intrafamiliar a hombre', 'value': 'violencia_intrafamiliar_hombre'},
+    {'label': 'Violencia intrafamiliar a mujer', 'value': 'violencia_intrafamiliar_mujer'},
+    {'label': 'Violencia intrafamiliar a niño', 'value': 'violencia_intrafamiliar_nino'},
+    {'label': 'Violencia intrafamiliar no clasificado', 'value': 'violencia_intrafamiliar_no_clasificado'},
+    {'label': 'Receptación', 'value': 'receptacion'},
+    {'label': 'Robo frustrado', 'value': 'robo_frustrado'}
+]
+
+OPCIONES_TERRITORIO = [
+    {'label': 'Nacional', 'value': 'Nacional'},
+    {'label': 'Tarapacá', 'value': 'Tarapacá'},
+    {'label': 'Atacama', 'value': 'Atacama'},
+    {'label': 'Coquimbo', 'value': 'Coquimbo'},
+    {'label': 'Valparaíso', 'value': 'Valparaíso'},
+    {'label': "O'Higgins", 'value': "O'Higgins"},
+    {'label': 'Maule', 'value': 'Maule'},
+    {'label': 'Biobío', 'value': 'Biobío'},
+    {'label': 'Araucanía', 'value': 'Araucanía'},
+    {'label': 'Lagos', 'value': 'Lagos'},
+    {'label': 'Aysén', 'value': 'Aysén'},
+    {'label': 'Magallanes', 'value': 'Magallanes'},
+    {'label': 'Metropolitana', 'value': 'Metropolitana'},
+    {'label': 'Ríos', 'value': 'Ríos'},
+    {'label': 'Arica y Parinacota', 'value': 'Arica y Parinacota'},
+    {'label': 'Ñuble', 'value': 'Ñuble'},
+]

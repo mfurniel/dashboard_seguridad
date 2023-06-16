@@ -29,6 +29,18 @@ app.layout = html.Div([
     html.Div([
         html.Link(href='app.css', rel='stylesheet'),
         html.Div([html.H1('Dataviz Security')], className='logo'),
+        dcc.Dropdown(
+        options= nConst.OPCIONES_TERRITORIO,
+        value='opcion1',  # Valor inicial seleccionado
+        placeholder='Unidad Territorial', 
+        className='custom-dropdown',
+        ),
+        dcc.Dropdown(
+        options= nConst.OPCIONES_DELITOS,
+        value='opcion2',  # Valor inicial seleccionado
+        placeholder='Delito',
+        className='custom-dropdown' 
+        ),
         html.Div([
             html.Span('Ultima Actualización: 01/06/2023'),
             html.Span('Datos: CEAD "Centro de Estudios y Análisis del Delito"'),
@@ -39,18 +51,16 @@ app.layout = html.Div([
     html.Div([
         # Columna izquierda
         html.Div('Contenido columna izquierda', className='contenido-izquierda'),
-
         # Columna derecha
         html.Div([
             # Fila 1
             html.Div([
                 html.Div([
                     html.Div([
-                        # html.H1(children='Top 5 delitos mas cometidos'),
-                        # dcc.Graph(
-                        #     id='delitos-graph',
-                        #     figure=configure_graph2()
-                        # ),
+                        dcc.Graph(
+                            id='barrasDelitosNacional',
+                            figure=graf.barrasDelitosNacional(False,False)
+                        ),
                     ], className='graficotopdelitos'),
                 ], className='topmas'),
             ], className='fila'),
@@ -59,8 +69,8 @@ app.layout = html.Div([
             html.Div([
                 html.Div(
                     dcc.Graph(
-                        id='delitos-graph',
-                        figure=graf.lineChartCDDA(0,nConst.DELITOS[nConst.GRUPOS_DELITOS[0]][5])
+                        id='lineChartCDDA-nacional',
+                        figure=graf.lineChartCDDA(0,nConst.DELITOS_CON_GRUPOS[nConst.GRUPOS_DELITOS[0]][5])
                     ),
                 className='nacional1'),
                 html.Div('Contenido graf 2 nacion', className='nacional2')
@@ -69,15 +79,20 @@ app.layout = html.Div([
             html.Div([
                 html.Div([
                     dcc.Graph(
-                        id='delitos-graph',
-                        figure=graf.lineChartCDDA(13,nConst.DELITOS[nConst.GRUPOS_DELITOS[0]][0])
+                        id='lineChartCDDA-region',
+                        figure=graf.lineChartCDDA(13,nConst.DELITOS_CON_GRUPOS[nConst.GRUPOS_DELITOS[0]][0])
                     ),
                 ], className='regional1'),
                 html.Div('Contenido graf 2 region', className='regional2')
             ], className='fila'),
             # Fila 3
             html.Div([
-                html.Div('Contenido graf 1 top menos', className='topmenos'),
+                html.Div([
+                    dcc.Graph(
+                            id='barrasDelitosNacional',
+                            figure=graf.barrasDelitosNacional(True,False)
+                    ),    
+                ], className='topmenos'),
                 html.Div('Contenido graf 2 inmigracion', className='inmigracion')
             ], className='fila'),
         ], className='contenido-derecho'),
