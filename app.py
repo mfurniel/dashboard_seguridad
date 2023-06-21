@@ -1,11 +1,11 @@
 import pandas as pd
 import plotly.graph_objects as go
 import dash
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, callback
 from dash.dependencies import Input, Output, State
 import utils as nConst
 import graficas as graf
-
+auxx= graf.lineChartCDDA(0,nConst.DELITOS_CON_GRUPOS[nConst.GRUPOS_DELITOS[0]][5])
 # def configure_graph1():
 #     # Configuración del primer gráfico
 #     delito_buscado = 'Lesiones leves'
@@ -30,14 +30,16 @@ app.layout = html.Div([
         html.Link(href='app.css', rel='stylesheet'),
         html.Div([html.H1('Dataviz Security')], className='logo'),
         dcc.Dropdown(
+        id='drop1',
         options= nConst.OPCIONES_TERRITORIO,
-        value='opcion1',  # Valor inicial seleccionado
+        value= nConst.DELITOS[0],  # Valor inicial seleccionado
         placeholder='Unidad Territorial', 
         className='custom-dropdown',
         ),
         dcc.Dropdown(
+        id='drop2',
         options= nConst.OPCIONES_DELITOS,
-        value='opcion2',  # Valor inicial seleccionado
+        value=nConst.DELITOS[0],  # Valor inicial seleccionado
         placeholder='Delito',
         className='custom-dropdown' 
         ),
@@ -102,6 +104,33 @@ app.layout = html.Div([
         ], className='contenido-derecho'),
     ], className='contenido-principal'),
 ])
+
+@app.callback(
+    Output(component_id='lineChartCDDA-nacional', component_property='figure'),
+    Input(component_id='drop2', component_property='value')
+)
+def update_nacional_delito(input_value):
+    input_value = input_value.capitalize()
+    print(input_value)
+    
+    # Lógica para actualizar el gráfico según el valor seleccionado en el dropdown
+    # Retorna la figura actualizada del gráfico
+    fig = graf.lineChartCDDA(0, input_value)
+    return fig
+
+@app.callback(
+    Output(component_id='lineChartCDDA-region', component_property='figure'),
+    Input(component_id='drop2', component_property='value')
+)
+def update_region_delito(input_value):
+    input_value = input_value.capitalize()
+    print(input_value)
+    
+    # Lógica para actualizar el gráfico según el valor seleccionado en el dropdown
+    # Retorna la figura actualizada del gráfico
+    fig = graf.lineChartCDDA(13, input_value)
+    return fig
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
