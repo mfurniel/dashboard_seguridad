@@ -64,6 +64,24 @@
   padding: 10px;
 }
 
+.radios-barras-top {
+  /* Agrega tus estilos personalizados aquí */
+  /* Ejemplo de estilos CSS */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 15px; 
+}
+
+.radios-barras-top label {
+  /* Estilos para los labels */
+  /* Ejemplo de estilos CSS */
+  display: block;
+  margin-bottom: 10;
+  font-size: 11px;
+}
+
 /* Estilos para cada fila de contenido */
 .fila {
   width: 100%;

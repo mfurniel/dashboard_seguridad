@@ -1,24 +1,10 @@
 import pandas as pd
 import plotly.graph_objects as go
-import plotly.express as px
 import dash
 from dash import Dash, html, dcc, callback
 from dash.dependencies import Input, Output, State
 import utils as nConst
 import graficas as graf
-auxx= graf.lineChartCDDA(0,nConst.DELITOS_CON_GRUPOS[nConst.GRUPOS_DELITOS[0]][5])
-# def configure_graph1():
-#     # Configuración del primer gráfico
-#     delito_buscado = 'Lesiones leves'
-#     meses = df.columns[1:]
-#     homicidios = df.loc[delito_buscado]
-#     fig = go.Figure(data=go.Scatter(x=meses, y=homicidios, mode='lines', marker=dict(symbol='circle', size=8)))
-#     fig.update_layout(
-#         title=delito_buscado + '2022 Chile',
-#         xaxis=dict(title='Meses'),
-#         yaxis=dict(title='Cantidad de ' + delito_buscado)
-#     )
-#     return fig
 
 # Configuración de la aplicación Dash
 app = dash.Dash(__name__)
@@ -33,15 +19,15 @@ app.layout = html.Div([
         dcc.Dropdown(
         id='drop1',
         options= nConst.OPCIONES_TERRITORIO,
-        value= nConst.DELITOS[0],  # Valor inicial seleccionado
+        value= '13',  # Valor inicial seleccionado
         placeholder='Unidad Territorial', 
         className='custom-dropdown',
         ),
         dcc.Dropdown(
         id='drop2',
         options= nConst.OPCIONES_DELITOS,
-        value=nConst.DELITOS[0],  # Valor inicial seleccionado
-        placeholder='Delito',
+        value=nConst.GRUPOS_DELITOS[0],  # Valor inicial seleccionado
+        placeholder=nConst.GRUPOS_DELITOS[0],
         className='custom-dropdown' 
         ),
         html.Div([
@@ -59,11 +45,27 @@ app.layout = html.Div([
             # Fila 1
             html.Div([
                 html.Div([
-                    html.Div([
+                    html.Div([                        
                         dcc.Graph(
                             id='barrasDelitosNacional',
-                            figure=graf.barrasDelitosNacional(False,False)
+                            figure=graf.barrasDelitosNacional(False,'grupos')
                         ),
+                        dcc.RadioItems(
+                            id='radio-top-barras-callback',
+                            options=[
+                                {'label':'Grupos', 'value': 'grupos'},
+                                {'label':'Delitos de mayor connotación social', 'value': 'Delitos de mayor connotación social'}, 
+                                {'label':'Infracción a ley de armas','value': 'Infracción a ley de armas'}, 
+                                {'label':'Incivilidades','value': 'Incivilidades'}, 
+                                {'label':'Abigeato','value': 'Abigeato'}, 
+                                {'label':'Abusos sexuales y otros delitos sexuales','value': 'Abusos sexuales y otros delitos sexuales'}, 
+                                {'label':'Violencia intrafamiliar','value': 'Violencia intrafamiliar'}, 
+                                {'label':'Receptación','value': 'Receptación'}, 
+                                {'label':'Robo frustrado','value': 'Robo frustrado'}, 
+                            ],                        
+                            value='grupos',  # Valor seleccionado por defecto
+                            className='radios-barras-top',
+                        )
                     ], className='graficotopdelitos'),
                 ], className='topmas'),
             ], className='fila'),
@@ -72,22 +74,22 @@ app.layout = html.Div([
             html.Div([
                 html.Div(
                     dcc.Graph(
-                        id='lineChartCDDA-nacional',
-                        figure=graf.lineChartCDDA(0,nConst.DELITOS_CON_GRUPOS[nConst.GRUPOS_DELITOS[0]][5])
+                        id='lineChartCDDA-nacional',                      
+                        figure=graf.lineChartCDDA(0,nConst.GRUPOS_DELITOS[0])
                     ),
                 className='nacional1'),
                 html.Div([ 
                     dcc.Graph(
-                            id='barrasDelitosNacional',
-                            figure=graf.ciruclarHvsM('2022','VICTIMA')
+                            id='lineChartCDDA-region',                          
+                            figure=graf.lineChartCDDA(13,nConst.GRUPOS_DELITOS[0])
                     ),], className='nacional2')
             ], className='fila'),
             # Fila 2
             html.Div([
                 html.Div([
                     dcc.Graph(
-                        id='lineChartCDDA-region',
-                        figure=graf.lineChartCDDA(13,nConst.DELITOS_CON_GRUPOS[nConst.GRUPOS_DELITOS[0]][0])
+                        id='circular-barra',
+                        figure=graf.ciruclarHvsM('2022','VICTIMA')
                     ),
                 ], className='regional1'),
                 html.Div('Contenido graf 2 region', className='regional2')
@@ -96,16 +98,11 @@ app.layout = html.Div([
             html.Div([
                 html.Div([
                     dcc.Graph(
-                            id='barrasDelitosNacional',
-                            figure=graf.barrasDelitosNacional(True,False)
+                            id='histogramaSE',
+                            figure=graf.histogramSxE(17)
                     ),    
-                ], className='topmenos'),
-                html.Div([
-                    dcc.Graph(
-                            id='barrasDelitosNacional',
-                            figure=graf.histogramSxE(18)
-                    ),    
-                ], className='sexoporedad')
+                ], className='histoSE'),
+            # html.Div('Contenido graf 2 inmigracion', className='inmigracion')
             ], className='fila'),
         ], className='contenido-derecho'),
     ], className='contenido-principal'),
@@ -117,7 +114,7 @@ app.layout = html.Div([
 )
 def update_nacional_delito(input_value):
     input_value = input_value.capitalize()
-    print(input_value)
+    
     
     # Lógica para actualizar el gráfico según el valor seleccionado en el dropdown
     # Retorna la figura actualizada del gráfico
@@ -126,16 +123,25 @@ def update_nacional_delito(input_value):
 
 @app.callback(
     Output(component_id='lineChartCDDA-region', component_property='figure'),
-    Input(component_id='drop2', component_property='value')
+    [Input(component_id='drop2', component_property='value'),
+     Input(component_id='drop1', component_property='value')]
 )
-def update_region_delito(input_value):
-    input_value = input_value.capitalize()
-    print(input_value)
+def update_nacional_delito(input_value1, input_value2):
+    input_value1 = input_value1.capitalize()
+    input_value2 = input_value2.capitalize()
     
-    # Lógica para actualizar el gráfico según el valor seleccionado en el dropdown
+    # Lógica para actualizar el gráfico según los valores seleccionados en los dropdowns
     # Retorna la figura actualizada del gráfico
-    fig = graf.lineChartCDDA(13, input_value)
+    fig = graf.lineChartCDDA(input_value2, input_value1)
     return fig
+
+@app.callback(
+    Output('barrasDelitosNacional', 'figure'),
+    [Input('radio-top-barras-callback', 'value')]
+)
+def update_output(value):
+    return graf.barrasDelitosNacional(False,value)
+    
 
 
 if __name__ == '__main__':

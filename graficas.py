@@ -9,28 +9,38 @@ def barrasDelitosNacional(ascendente,grupo):
      
     # Leer el archivo de Excel especificado en nConst.EXCEL_PATH[0] y almacenar los datos en un DataFrame
     df = pd.read_excel(nConst.EXCEL_PATH[0]) # nConst.EXCEL_PATH[0] es 'nacional'
-    
+
     # Establecer la columna 'GRUPO DELICTUAL / DELITO' como índice del DataFrame
+    
     df = df.set_index('GRUPO DELICTUAL / DELITO')
-    if grupo:
-        df = df[~df.index.isin(nConst.GRUPOS_DELITOS)]
-    else:
+
+    if grupo == 'grupos':
         df = df[~df.index.isin(nConst.DELITOS)]
-   
+    elif nConst.DELITOS_CON_GRUPOS[grupo]==[]:
+        df=pd.DataFrame(df.loc[grupo]).T
+    else:
+        df = df[~df.index.isin(nConst.GRUPOS_DELITOS)]
+        for i, grupo_delito in enumerate(nConst.GRUPOS_DELITOS):
+            if grupo == grupo_delito and nConst.DELITOS_CON_GRUPOS[grupo_delito]:
+                df = df[df.index.isin(nConst.DELITOS_CON_GRUPOS[grupo_delito])]
+                break  
+    #   
     # Copiar el DataFrame original para realizar modificaciones sin afectar los datos originales
     df_aux = df.copy()
     
     # Agregar una columna 'Total' que contenga la suma de todas las filas
     df_aux['Total'] = df_aux.sum(axis=1)
 
+
     # Ordenar el DataFrame en función de los valores de la columna 'Total' de forma descendente
     df_aux = df_aux.sort_values("Total", ascending=ascendente)
     
     # Obtener una lista de los cinco delitos más comunes
-    listadelitos = df_aux.index[:5].tolist()
-    
+    listadelitos = df_aux.index.tolist()
+   
     # Obtener los valores correspondientes a los cinco delitos más comunes en la columna 'Total'
-    valores_primeros_cinco = df_aux.loc[df_aux.index[:5], 'Total']
+    valores_primeros_cinco = df_aux.loc[df_aux.index, 'Total']
+
     
     # Crear el objeto de la figura del gráfico de barras utilizando la biblioteca plotly.graph_objects
     fig = go.Figure(data=go.Bar(x=listadelitos, y=valores_primeros_cinco, width=0.3))
@@ -49,17 +59,21 @@ def barrasDelitosNacional(ascendente,grupo):
         cometidos='más'
 
     fig.update_layout(
-        title='Top 5 ' + grupo_o_delito + ' ' + cometidos +' Cometidos (2005-2022)',
+        title='Top ' + grupo_o_delito + ' ' + cometidos +' Cometidos (2005-2022)',
         xaxis=dict(title='Delitos'),
         yaxis=dict(title='Cantidad cometida')
     )
-    
+
+    if grupo!='grupos' and nConst.DELITOS_CON_GRUPOS[grupo]==[]:
+       fig.update_yaxes(range=[0, 200000])  # Establecer el rango del eje y de 0 a 10000 (puedes ajustar el valor según tus necesidades)
+
     # Devolver la figura del gráfico generada
     return fig
 
 # Grafico LineChart Nacional o Regional se ocupa la misma funcion
 
 def lineChartCDDA(numero_territorio,delito_buscado):
+    numero_territorio=int(numero_territorio)
     excel_path = nConst.EXCEL_PATH[numero_territorio]
     subcategorias = nConst.SUBCATEGORIAS
 
