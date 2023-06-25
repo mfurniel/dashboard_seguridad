@@ -120,6 +120,24 @@ EXCEL_PATH = [
     'dataset/region/rios_por_anyos.xlsx',           # 14
     'dataset/region/arica_por_anyos.xlsx',          # 15
     'dataset/region/nyuble_por_anyos.xlsx',         # 16
+    'dataset/nacional/sexo_edad_nacional.xlsx',     # 17
+    'dataset/region/sexo_edad_tarapaca.xlsx',     # 18
+    'dataset/region/sexo_edad_antofagasta.xlsx',  # 19
+    'dataset/region/sexo_edad_atacama.xlsx',      # 20
+    'dataset/region/sexo_edad_coquimbo.xlsx',     # 21
+    'dataset/region/sexo_edad_valparaiso.xlsx',   # 22
+    'dataset/region/sexo_edad_ohiggins.xlsx',     # 23
+    'dataset/region/sexo_edad_maule.xlsx',        # 24
+    'dataset/region/sexo_edad_biobio.xlsx',       # 25
+    'dataset/region/sexo_edad_araucania.xlsx',    # 26
+    'dataset/region/sexo_edad_lagos.xlsx',        # 27
+    'dataset/region/sexo_edad_aysen.xlsx',        # 28
+    'dataset/region/sexo_edad_magallanes.xlsx',   # 29
+    'dataset/region/sexo_edad_metropolitana.xlsx',# 30
+    'dataset/region/sexo_edad_rios.xlsx',         # 31
+    'dataset/region/sexo_edad_arica.xlsx',        # 32
+    'dataset/region/sexo_edad_nyuble.xlsx',       # 33
+
 ]
 
 TERRITORIO = [

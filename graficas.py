@@ -1,6 +1,7 @@
 import pandas as pd
 import utils as nConst
 import plotly.graph_objects as go
+import plotly.express as px
 
 #Grefica Top X Delitos o Grupos Delictuales
 
@@ -117,3 +118,21 @@ def ciruclarHvsM(año,tipo):
 
     # Mostrar el gráfico
     return fig
+
+def histogramSxE(numero_territorio):
+    df = pd.read_excel(nConst.EXCEL_PATH[numero_territorio])
+    #if(numero_territorio == 17):
+    listafiltrada = df[df['Edad'] != 'Total']
+    listafiltrada = listafiltrada[listafiltrada['Sexo'] == 'TOTAL']
+    listafiltrada = listafiltrada[listafiltrada['Tipo Participante'] == 'VICTIMA']
+
+    df_melted = pd.melt(listafiltrada, id_vars=['Edad'], var_name='Año', value_name='Cantidad')
+    fig = px.histogram(df_melted, x='Edad', y='Cantidad', color='Año', category_orders={'Año': [2005, 2022]})
+    fig.update_layout(
+    title='Histograma de Víctimas de Delitos por Edades',
+    xaxis_title='Cantidad de Víctimas',
+    yaxis_title='Frecuencia',
+    barmode='group'
+    )
+    return fig
+

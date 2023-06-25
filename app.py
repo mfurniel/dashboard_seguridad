@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.express as px
 import dash
 from dash import Dash, html, dcc, callback
 from dash.dependencies import Input, Output, State
@@ -99,7 +100,12 @@ app.layout = html.Div([
                             figure=graf.barrasDelitosNacional(True,False)
                     ),    
                 ], className='topmenos'),
-                html.Div('Contenido graf 2 inmigracion', className='inmigracion')
+                html.Div([
+                    dcc.Graph(
+                            id='barrasDelitosNacional',
+                            figure=graf.histogramSxE(18)
+                    ),    
+                ], className='sexoporedad')
             ], className='fila'),
         ], className='contenido-derecho'),
     ], className='contenido-principal'),
