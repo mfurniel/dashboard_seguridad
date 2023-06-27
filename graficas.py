@@ -1,8 +1,9 @@
+from matplotlib import pyplot as plt
 import pandas as pd
 import utils as nConst
 import plotly.graph_objects as go
 import plotly.express as px
-
+import geopandas as gpd
 #Grefica Top X Delitos o Grupos Delictuales
 
 def barrasDelitosNacional(ascendente,grupo):
@@ -150,6 +151,7 @@ def histogramSxE(numero_territorio):
     )
     return fig
 
+<<<<<<< Updated upstream
 # import geopandas as gpd
 
 
@@ -166,3 +168,22 @@ def histogramSxE(numero_territorio):
 #     fig.update_layout(title_text='Mapa de Chile')
     
 #     return fig
+=======
+def chilegraf():
+    # Cargar los datos geoespaciales de Chile
+    chile = gpd.read_file('regiones_edit.geojson')
+
+     # Crear la figura y ejes
+    fig, ax = plt.subplots(figsize=(10, 10))
+
+    # Dibujar el gráfico de Chile
+    chile.plot(ax=ax)
+
+    # Personalizar el gráfico
+    ax.set_title('Mapa de Chile')
+    ax.set_xlabel('Longitud')
+    ax.set_ylabel('Latitud')
+    ax.legend()
+
+    return ax
+>>>>>>> Stashed changes

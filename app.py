@@ -41,9 +41,15 @@ app.layout = html.Div([
     html.Div([
         # Columna izquierda
         html.Div(dcc.Graph(
+<<<<<<< Updated upstream
                             id='mapachile',
                             figure=map.mapChile()
                         ), className='contenido-izquierda'),
+=======
+                id='MapaDeChile',
+                figure=graf.chilegraf(),
+                ), className='contenido-izquierda'),
+>>>>>>> Stashed changes
         # Columna derecha
         html.Div([
             # Fila 1
