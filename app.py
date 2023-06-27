@@ -5,6 +5,7 @@ from dash import Dash, html, dcc, callback
 from dash.dependencies import Input, Output, State
 import utils as nConst
 import graficas as graf
+import mapa as map
 
 # Configuración de la aplicación Dash
 app = dash.Dash(__name__)
@@ -39,7 +40,10 @@ app.layout = html.Div([
     # Contenido principal
     html.Div([
         # Columna izquierda
-        html.Div('Contenido columna izquierda', className='contenido-izquierda'),
+        html.Div(dcc.Graph(
+                            id='mapachile',
+                            figure=map.mapChile()
+                        ), className='contenido-izquierda'),
         # Columna derecha
         html.Div([
             # Fila 1

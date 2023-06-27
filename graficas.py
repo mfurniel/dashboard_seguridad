@@ -150,3 +150,19 @@ def histogramSxE(numero_territorio):
     )
     return fig
 
+# import geopandas as gpd
+
+
+# def mapachile():
+#     # Cargar los datos geoespaciales de Chile
+#     chile = gpd.read_file('regiones_edit.geojson')
+
+#     # Crear el gráfico de Chile con Plotly
+#     fig = px.choropleth(chile, geojson=chile.geometry, locations=chile.index,
+#                         color='color_column',  # Columna que determina los colores del mapa
+#                         projection="natural earth")
+
+#     # Personalizar el gráfico
+#     fig.update_layout(title_text='Mapa de Chile')
+    
+#     return fig
