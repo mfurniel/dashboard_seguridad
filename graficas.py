@@ -48,10 +48,10 @@ def barrasDelitosNacional(ascendente,grupo):
     
     # Configurar el diseño del gráfico, incluyendo título y etiquetas de los ejes
     grupo_o_delito=''
-    if grupo:
-        grupo_o_delito='Delitos'
-    else:
+    if grupo == 'grupos':
         grupo_o_delito='Grupos de Delitos'
+    else:
+        grupo_o_delito= grupo
 
     cometidos=''
     if ascendente:
@@ -60,7 +60,7 @@ def barrasDelitosNacional(ascendente,grupo):
         cometidos='más'
 
     fig.update_layout(
-        title='Top ' + grupo_o_delito + ' ' + cometidos +' Cometidos (2005-2022)',
+        title='Cantidad por '+ grupo_o_delito + ' ' + 'Historicamente (2005-2022)',
         xaxis=dict(title='Delitos'),
         yaxis=dict(title='Cantidad cometida')
     )
@@ -108,8 +108,10 @@ def lineChartCDDA(numero_territorio,delito_buscado):
     )
     return fig
 
-def ciruclarHvsM(año,tipo):
-    df = pd.read_excel('dataset/nacional/sexo_edad_nacional.xlsx')
+def ciruclarHvsM(año,tipo,numero_territorio):
+
+    excel_path = nConst.EXCEL_PATH[numero_territorio]
+    df = pd.read_excel(excel_path)
     filtro = (df['Tipo Participante'] == tipo) & (df['Sexo'] == 'MUJER') & (df['Edad'] == 'Total')
     fila_filtrada = df[filtro]
     valorM = fila_filtrada[año].values[0]
@@ -127,31 +129,52 @@ def ciruclarHvsM(año,tipo):
 
     # Personalizar el diseño
     fig.update_traces(hole=0.4, hoverinfo="label+percent+value")
-
+    tipo = tipo.capitalize().lower()
+    tipo = tipo.capitalize()
     # Añadir título
-    fig.update_layout(title_text= tipo + " Hombres vs Mujeres todos los Delitos Año "+año)
+    fig.update_layout(title_text= tipo + " Hombres vs Mujeres todos los Delitos Año "+ str(año))
 
     # Mostrar el gráfico
     return fig
 
 def histogramSxE(numero_territorio):
     df = pd.read_excel(nConst.EXCEL_PATH[numero_territorio])
-    #if(numero_territorio == 17):
+    
+    # Filtrar los datos
     listafiltrada = df[df['Edad'] != 'Total']
     listafiltrada = listafiltrada[listafiltrada['Sexo'] == 'TOTAL']
     listafiltrada = listafiltrada[listafiltrada['Tipo Participante'] == 'VICTIMA']
-
+    
+    # Eliminar los años no deseados
     df_melted = pd.melt(listafiltrada, id_vars=['Edad'], var_name='Año', value_name='Cantidad')
+    df_melted = df_melted[df_melted['Año'] != '2006']
+    df_melted = df_melted[df_melted['Año'] != '2007']
+    df_melted = df_melted[df_melted['Año'] != '2009']
+    df_melted = df_melted[df_melted['Año'] != '2010']
+    df_melted = df_melted[df_melted['Año'] != '2012']
+    df_melted = df_melted[df_melted['Año'] != '2013']
+    df_melted = df_melted[df_melted['Año'] != '2015']
+    df_melted = df_melted[df_melted['Año'] != '2016']
+    df_melted = df_melted[df_melted['Año'] != '2018']
+    df_melted = df_melted[df_melted['Año'] != '2019']
+    df_melted = df_melted[df_melted['Año'] != '2021']
+    df_melted = df_melted[df_melted['Año'] != '2022']
+    df_melted = df_melted[df_melted['Año'] != 'Tipo Participante']
+    df_melted = df_melted[df_melted['Año'] != 'Sexo']
+    df_melted = df_melted[df_melted['Edad'] != 'No identifica']
+    
+    # Crear el histograma
     fig = px.histogram(df_melted, x='Edad', y='Cantidad', color='Año', category_orders={'Año': [2005, 2022]})
     fig.update_layout(
-    title='Histograma de Víctimas de Delitos por Edades',
-    xaxis_title='Cantidad de Víctimas',
-    yaxis_title='Frecuencia',
-    barmode='group'
+        title='Histograma de Víctimas de Delitos por Edades',
+        xaxis_title='Cantidad de Víctimas',
+        yaxis_title='Frecuencia',
+        barmode='group'
     )
+    
     return fig
 
-<<<<<<< Updated upstream
+
 # import geopandas as gpd
 
 
@@ -168,22 +191,3 @@ def histogramSxE(numero_territorio):
 #     fig.update_layout(title_text='Mapa de Chile')
     
 #     return fig
-=======
-def chilegraf():
-    # Cargar los datos geoespaciales de Chile
-    chile = gpd.read_file('regiones_edit.geojson')
-
-     # Crear la figura y ejes
-    fig, ax = plt.subplots(figsize=(10, 10))
-
-    # Dibujar el gráfico de Chile
-    chile.plot(ax=ax)
-
-    # Personalizar el gráfico
-    ax.set_title('Mapa de Chile')
-    ax.set_xlabel('Longitud')
-    ax.set_ylabel('Latitud')
-    ax.legend()
-
-    return ax
->>>>>>> Stashed changes

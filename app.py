@@ -40,16 +40,11 @@ app.layout = html.Div([
     # Contenido principal
     html.Div([
         # Columna izquierda
-        html.Div(dcc.Graph(
-<<<<<<< Updated upstream
-                            id='mapachile',
-                            figure=map.mapChile()
-                        ), className='contenido-izquierda'),
-=======
-                id='MapaDeChile',
-                figure=graf.chilegraf(),
-                ), className='contenido-izquierda'),
->>>>>>> Stashed changes
+        html.Div(
+            dcc.Graph(
+                id='mapachile',
+                figure=map.mapChile(),
+        ), className='contenido-izquierda'),
         # Columna derecha
         html.Div([
             # Fila 1
@@ -98,11 +93,26 @@ app.layout = html.Div([
             html.Div([
                 html.Div([
                     dcc.Graph(
-                        id='circular-barra',
-                        figure=graf.ciruclarHvsM('2022','VICTIMA')
+                        id='circular-barra-victima',
+                        figure=graf.ciruclarHvsM('2018','VICTIMA',17)
                     ),
                 ], className='regional1'),
-                html.Div('Contenido graf 2 region', className='regional2')
+                html.Div(
+                    dcc.Graph(
+                        id='circular-barra-vitimario',
+                        figure=graf.ciruclarHvsM('2018','VICTIMARIO',17)
+                    ), className='regional2'),
+                # html.Div([
+                #     dcc.Graph(
+                #         id='circular-barra-victima',
+                #         figure=graf.ciruclarHvsM('2018','VICTIMA',17)
+                #     ),
+                # ], className='regional1'),
+                # html.Div(
+                #     dcc.Graph(
+                #         id='circular-barra-vitimario',
+                #         figure=graf.ciruclarHvsM('2018','VICTIMARIO',17)
+                #     ), className='regional2')
             ], className='fila'),
             # Fila 3
             html.Div([
@@ -113,7 +123,7 @@ app.layout = html.Div([
                     ),    
                 ], className='histoSE'),
             # html.Div('Contenido graf 2 inmigracion', className='inmigracion')
-            ], className='fila'),
+            ], className='filasingular'),
         ], className='contenido-derecho'),
     ], className='contenido-principal'),
 ])

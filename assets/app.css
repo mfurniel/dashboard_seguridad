@@ -51,6 +51,8 @@
   width: 20%;
   background-color: #f9f9f9;
   padding: 10px;
+  height: 100vh;
+  
 }
 
 
@@ -90,6 +92,9 @@
   margin-bottom: 10px;
 }
 
+.filasingular{
+  width: 100%;
+}
 /* Estilos específicos para cada div de la parte derecha */
 .nacional1,
 .nacional2,
