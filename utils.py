@@ -120,24 +120,26 @@ EXCEL_PATH = [
     'dataset/region/rios_por_anyos.xlsx',           # 14
     'dataset/region/arica_por_anyos.xlsx',          # 15
     'dataset/region/nyuble_por_anyos.xlsx',         # 16
-    'dataset/nacional/sexo_edad_nacional.xlsx',     # 17
-    'dataset/region/sexo_edad_tarapaca.xlsx',     # 18
-    'dataset/region/sexo_edad_antofagasta.xlsx',  # 19
-    'dataset/region/sexo_edad_atacama.xlsx',      # 20
-    'dataset/region/sexo_edad_coquimbo.xlsx',     # 21
-    'dataset/region/sexo_edad_valparaiso.xlsx',   # 22
-    'dataset/region/sexo_edad_ohiggins.xlsx',     # 23
-    'dataset/region/sexo_edad_maule.xlsx',        # 24
-    'dataset/region/sexo_edad_biobio.xlsx',       # 25
-    'dataset/region/sexo_edad_araucania.xlsx',    # 26
-    'dataset/region/sexo_edad_lagos.xlsx',        # 27
-    'dataset/region/sexo_edad_aysen.xlsx',        # 28
-    'dataset/region/sexo_edad_magallanes.xlsx',   # 29
-    'dataset/region/sexo_edad_metropolitana.xlsx',# 30
-    'dataset/region/sexo_edad_rios.xlsx',         # 31
-    'dataset/region/sexo_edad_arica.xlsx',        # 32
-    'dataset/region/sexo_edad_nyuble.xlsx',       # 33
+]
 
+EXCEL_PATH_SE = [
+    'dataset/nacional/sexo_edad_nacional.xlsx',   # 0
+    'dataset/region/sexo_edad_tarapaca.xlsx',     # 1
+    'dataset/region/sexo_edad_antofagasta.xlsx',  # 2
+    'dataset/region/sexo_edad_atacama.xlsx',      # 3
+    'dataset/region/sexo_edad_coquimbo.xlsx',     # 4
+    'dataset/region/sexo_edad_valparaiso.xlsx',   # 5
+    'dataset/region/sexo_edad_ohiggins.xlsx',     # 6
+    'dataset/region/sexo_edad_maule.xlsx',        # 7
+    'dataset/region/sexo_edad_biobio.xlsx',       # 8
+    'dataset/region/sexo_edad_araucania.xlsx',    # 9
+    'dataset/region/sexo_edad_lagos.xlsx',        # 10
+    'dataset/region/sexo_edad_aysen.xlsx',        # 11
+    'dataset/region/sexo_edad_magallanes.xlsx',   # 12
+    'dataset/region/sexo_edad_metropolitana.xlsx',# 13
+    'dataset/region/sexo_edad_rios.xlsx',         # 14
+    'dataset/region/sexo_edad_arica.xlsx',        # 15
+    'dataset/region/sexo_edad_nyuble.xlsx',       # 16
 ]
 
 TERRITORIO = [
@@ -209,19 +211,19 @@ OPCIONES_DELITOS = [
 
 OPCIONES_TERRITORIO = [
     # {'label': 'Nacional', 'value': 'Nacional'},
+    {'label': 'Arica y Parinacota', 'value': '15'},
     {'label': 'Tarapacá', 'value': '2'},
     {'label': 'Atacama', 'value': '3'},
     {'label': 'Coquimbo', 'value': '4'},
     {'label': 'Valparaíso', 'value': '5'},
+    {'label': 'Metropolitana', 'value': '13'},
     {'label': "O'Higgins", 'value': "6"},
     {'label': 'Maule', 'value': '7'},
+    {'label': 'Ñuble', 'value': '16'},
     {'label': 'Biobío', 'value': '8'},
     {'label': 'Araucanía', 'value': '9'},
+    {'label': 'Ríos', 'value': '14'},
     {'label': 'Lagos', 'value': '10'},
     {'label': 'Aysén', 'value': '11'},
-    {'label': 'Magallanes', 'value': '12'},
-    {'label': 'Metropolitana', 'value': '13'},
-    {'label': 'Ríos', 'value': '14'},
-    {'label': 'Arica y Parinacota', 'value': '15'},
-    {'label': 'Ñuble', 'value': '16'},
+    {'label': 'Magallanes', 'value': '12'},   
 ]

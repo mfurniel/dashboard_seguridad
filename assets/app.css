@@ -1,6 +1,10 @@
 /* Estilos para la barra superior */
 .barra-superior {
   background-color: #3e3e3e;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
   /* padding: 1px; */
   display: flex;
   align-items: center;
@@ -44,26 +48,32 @@
   height: 86vh;
   /* flex-wrap: wrap; */
   padding: 10px;
+  margin-top: 12vh;
 }
 
 /* Estilos para la columna izquierda */
 .contenido-izquierda {
-  width: 20%;
+  /* width: 20%; */
   background-color: #f9f9f9;
   padding: 10px;
-  height: 100vh;
-  
+  height: 100%;
 }
 
 
 
 /* Estilos para la columna derecha */
 .contenido-derecho {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 10px;
+}
+
+.graficotopdelitos{
+width: 100%;
+padding: 10px;
+background-color: #f2f2f2;
 }
 
 .radios-barras-top {
@@ -100,6 +110,12 @@
 .nacional2,
 .regional1,
 .regional2,
+.regionalline,
+.nacionalline,
+.cNacionalvo,
+.cNacionalva,
+.cRegionalva,
+.cRegionalvo,
 .topmenos,
 .inmigracion {
   width: 48%;
@@ -107,25 +123,34 @@
 }
 
 .topmas{
+  display: flex;
   background-color: #f2f2f2;
-  width: 100%;
+  width: auto;
   padding: 10px;
 }
 
-.nacional1 {
-  background-color: #f2f2f2;
+.regionalline{
+  background-color: #2cc0be
 }
 
-.nacional2 {
-  background-color: #eaeaea;
+.nacionalline{
+  background-color: #3e3e3e;
 }
 
-.regional1 {
-  background-color: #f9f9f9;
+.cNacionalva {
+  background-color: #3e3e3e;
 }
 
-.regional2 {
-  background-color: #e9e9e9;
+.cNacionalvo {
+  background-color: #3e3e3e;
+}
+
+.cRegionalvo {
+  background-color: #2cc0be;
+}
+
+.cRegionalva {
+  background-color: #2cc0be;
 }
 
 .topmenos {

@@ -40,16 +40,21 @@ app.layout = html.Div([
     # Contenido principal
     html.Div([
         # Columna izquierda
-        html.Div(
-            dcc.Graph(
-                id='mapachile',
-                figure=map.mapChile(),
-        ), className='contenido-izquierda'),
+        # html.Div(
+        #     dcc.Graph(
+        #         id='mapachile',
+        #         figure=map.mapChile(),
+        # ), className='contenido-izquierda'),
         # Columna derecha
         html.Div([
             # Fila 1
             html.Div([
-                html.Div([
+              
+                    html.Div(
+                    dcc.Graph(
+                        id='mapachile',
+                        figure=map.mapChile(),
+                    ), className='contenido-izquierda'),
                     html.Div([                        
                         dcc.Graph(
                             id='barrasDelitosNacional',
@@ -72,7 +77,7 @@ app.layout = html.Div([
                             className='radios-barras-top',
                         )
                     ], className='graficotopdelitos'),
-                ], className='topmas'),
+                
             ], className='fila'),
 
             # Fila 1.1
@@ -82,44 +87,44 @@ app.layout = html.Div([
                         id='lineChartCDDA-nacional',                      
                         figure=graf.lineChartCDDA(0,nConst.GRUPOS_DELITOS[0])
                     ),
-                className='nacional1'),
+                className='nacionalline'),
                 html.Div([ 
                     dcc.Graph(
                             id='lineChartCDDA-region',                          
                             figure=graf.lineChartCDDA(13,nConst.GRUPOS_DELITOS[0])
-                    ),], className='nacional2')
+                    ),], className='regionalline')
             ], className='fila'),
             # Fila 2
             html.Div([
                 html.Div([
                     dcc.Graph(
-                        id='circular-barra-victima',
-                        figure=graf.ciruclarHvsM('2018','VICTIMA',17)
+                        id='circular-barra-victima-nacinal',
+                        figure=graf.ciruclarHvsM('2018','VICTIMA',0)
                     ),
-                ], className='regional1'),
+                ], className='cNacionalva'),
                 html.Div(
                     dcc.Graph(
-                        id='circular-barra-vitimario',
-                        figure=graf.ciruclarHvsM('2018','VICTIMARIO',17)
-                    ), className='regional2'),
-                # html.Div([
-                #     dcc.Graph(
-                #         id='circular-barra-victima',
-                #         figure=graf.ciruclarHvsM('2018','VICTIMA',17)
-                #     ),
-                # ], className='regional1'),
-                # html.Div(
-                #     dcc.Graph(
-                #         id='circular-barra-vitimario',
-                #         figure=graf.ciruclarHvsM('2018','VICTIMARIO',17)
-                #     ), className='regional2')
+                        id='circular-barra-vitimario-nacional',
+                        figure=graf.ciruclarHvsM('2018','VICTIMARIO',0)
+                    ), className='cNacionalvo'),
+                html.Div([
+                    dcc.Graph(
+                        id='circular-barra-victima-regional',
+                        figure=graf.ciruclarHvsM('2022','VICTIMA',13)
+                    ),
+                ], className='cRegionalva'),
+                html.Div(
+                    dcc.Graph(
+                        id='circular-barra-vitimario-regional',
+                        figure=graf.ciruclarHvsM('2022','VICTIMARIO',13)
+                    ), className='cRegionalvo')
             ], className='fila'),
             # Fila 3
             html.Div([
                 html.Div([
                     dcc.Graph(
                             id='histogramaSE',
-                            figure=graf.histogramSxE(17)
+                            figure=graf.histogramSxE(0)
                     ),    
                 ], className='histoSE'),
             # html.Div('Contenido graf 2 inmigracion', className='inmigracion')

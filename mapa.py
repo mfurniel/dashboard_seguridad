@@ -19,7 +19,7 @@ def mapChile():
     chile_regions_geo = requests.get(repo_url).json()
 
     # Coroplético que representa la longitud de los nombres de las regiones de Chile
-    fig = px.choropleth(data_frame=df, 
+    fig = px.choropleth(data_frame=df,
                         geojson=chile_regions_geo, 
                         locations='NAME_REG', # nombre de la columna relevante del dataframe
                         featureidkey='properties.Region',  # ruta del campo del feature de GeoJSON con cuyos valores se cotejan los valores de la columna relevante
@@ -28,5 +28,13 @@ def mapChile():
                         scope="south america",
                     )
     fig.update_geos(showcountries=False, showcoastlines=False, showland=False, fitbounds="locations")
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    # fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(
+        # autosize=False, 
+        # margin=dict(l=0, r=0, t=0, b=0),  # Ajusta los márgenes del gráfico
+        height=500,  # Establece la altura del gráfico en píxeles
+        width=335,
+    )
+    fig.update_layout(coloraxis_showscale=False)
+    # fig.update_layout(height=900)  # Ajusta la altura del mapa aquí
     return fig

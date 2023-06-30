@@ -3,7 +3,7 @@ import pandas as pd
 import utils as nConst
 import plotly.graph_objects as go
 import plotly.express as px
-import geopandas as gpd
+
 #Grefica Top X Delitos o Grupos Delictuales
 
 def barrasDelitosNacional(ascendente,grupo):
@@ -44,29 +44,42 @@ def barrasDelitosNacional(ascendente,grupo):
 
     
     # Crear el objeto de la figura del gráfico de barras utilizando la biblioteca plotly.graph_objects
-    fig = go.Figure(data=go.Bar(x=listadelitos, y=valores_primeros_cinco, width=0.3))
+    fig = go.Figure(data=go.Bar(x=listadelitos, y=valores_primeros_cinco, width=0.3, marker=dict(color='#2cc0be')))
     
     # Configurar el diseño del gráfico, incluyendo título y etiquetas de los ejes
     grupo_o_delito=''
+    xtitle=''
     if grupo == 'grupos':
         grupo_o_delito='Grupos de Delitos'
+        xtitle='Grupo Delito'
+
     else:
         grupo_o_delito= grupo
+        xtitle='Delito'
 
-    cometidos=''
-    if ascendente:
-        cometidos='menos'
+    if len(listadelitos) > 1:
+        tickangle = 12
     else:
-        cometidos='más'
+        tickangle = 0
 
     fig.update_layout(
-        title='Cantidad por '+ grupo_o_delito + ' ' + 'Historicamente (2005-2022)',
-        xaxis=dict(title='Delitos'),
-        yaxis=dict(title='Cantidad cometida')
+        title='Cantidad por <span style="color: #2cc0be;">"' + grupo_o_delito + '"</span> Historicamente',
+        xaxis=dict(title=xtitle,title_font=dict(size=18),tickfont=dict(size=12),tickangle=tickangle,automargin=False),
+        yaxis=dict(title='Cantidad',title_font=dict(size=16),tickfont=dict(size=12)),
+        # plot_bgcolor='#ffffff',
+        # paper_bgcolor='#3e3e3e' 
+    )
+
+    fig.add_annotation(
+        text='A nivel Nacional entre el 2005 al 2022',
+        xref='paper', yref='paper',
+        x=-0.0125, y=1.15,
+        showarrow=False,
+        font=dict(size=16)
     )
 
     if grupo!='grupos' and nConst.DELITOS_CON_GRUPOS[grupo]==[]:
-       fig.update_yaxes(range=[0, 200000])  # Establecer el rango del eje y de 0 a 10000 (puedes ajustar el valor según tus necesidades)
+       fig.update_yaxes(range=[0, 250000])  # Establecer el rango del eje y de 0 a 10000 (puedes ajustar el valor según tus necesidades)
 
     # Devolver la figura del gráfico generada
     return fig
@@ -110,7 +123,7 @@ def lineChartCDDA(numero_territorio,delito_buscado):
 
 def ciruclarHvsM(año,tipo,numero_territorio):
 
-    excel_path = nConst.EXCEL_PATH[numero_territorio]
+    excel_path = nConst.EXCEL_PATH_SE[numero_territorio]
     df = pd.read_excel(excel_path)
     filtro = (df['Tipo Participante'] == tipo) & (df['Sexo'] == 'MUJER') & (df['Edad'] == 'Total')
     fila_filtrada = df[filtro]
@@ -118,9 +131,7 @@ def ciruclarHvsM(año,tipo,numero_territorio):
     filtro = (df['Tipo Participante'] == tipo) & (df['Sexo'] == 'HOMBRE') & (df['Edad'] == 'Total')
     fila_filtrada = df[filtro]
     valorH = fila_filtrada[año].values[0]
-    # Etiquetas para las categorías
     labels = ['Hombres', 'Mujeres']
-
     # Valores para cada categoría
     values = [valorH, valorM]
 
@@ -128,17 +139,40 @@ def ciruclarHvsM(año,tipo,numero_territorio):
     fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
 
     # Personalizar el diseño
-    fig.update_traces(hole=0.4, hoverinfo="label+percent+value")
+    fig.update_traces(
+        hole=0.3,
+        hoverinfo="label+percent+value",
+        marker=dict(colors=['#008bff', '#ff0080'], line=dict(color='#FFFFFF', width=2)),
+        textinfo='label+percent',
+        textfont=dict(size=14, color='#000000'),
+    )
     tipo = tipo.capitalize().lower()
     tipo = tipo.capitalize()
     # Añadir título
-    fig.update_layout(title_text= tipo + " Hombres vs Mujeres todos los Delitos Año "+ str(año))
-
+    fig.update_layout(
+        title={
+            'text': "Porcentaje de " + tipo + "s",
+            'font': {'size': 18},
+            'y': 0.9,
+        },
+        annotations=[
+            dict(
+                text="Hombres vs Mujeres todos los Delitos Año " + str(año),
+                x=-0.3,
+                y=1.15,
+                font=dict(size=12),
+                showarrow=False,
+            )
+        ],
+        # height=350,  # Tamaño de altura del gráfico
+        # width=350,  # Tamaño de ancho del gráfico
+    )
+    autosize=True,
     # Mostrar el gráfico
     return fig
 
 def histogramSxE(numero_territorio):
-    df = pd.read_excel(nConst.EXCEL_PATH[numero_territorio])
+    df = pd.read_excel(nConst.EXCEL_PATH_SE[numero_territorio])
     
     # Filtrar los datos
     listafiltrada = df[df['Edad'] != 'Total']
