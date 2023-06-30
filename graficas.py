@@ -122,7 +122,8 @@ def lineChartCDDA(numero_territorio,delito_buscado):
     return fig
 
 def ciruclarHvsM(año,tipo,numero_territorio):
-
+    año=str(año)
+    numero_territorio=int(numero_territorio)
     excel_path = nConst.EXCEL_PATH_SE[numero_territorio]
     df = pd.read_excel(excel_path)
     filtro = (df['Tipo Participante'] == tipo) & (df['Sexo'] == 'MUJER') & (df['Edad'] == 'Total')
@@ -146,13 +147,22 @@ def ciruclarHvsM(año,tipo,numero_territorio):
         textinfo='label+percent',
         textfont=dict(size=14, color='#000000'),
     )
+
+    terri=nConst.TERRITORIO[numero_territorio]
+    
+    if tipo == 'VICTIMA':
+        title_color = '#2cc0be'  # Verde
+    else:
+        title_color = '#572364'  # Rojo
+
     tipo = tipo.capitalize().lower()
     tipo = tipo.capitalize()
+    tipo = tipo+'s'
     # Añadir título
     fig.update_layout(
         title={
-            'text': "Porcentaje de " + tipo + "s",
-            'font': {'size': 18},
+            'text': "Porcentaje de " + '<span style="color: ' + title_color + ';">' + tipo + '</span>',
+            'font': {'size': 18,},
             'y': 0.9,
         },
         annotations=[
@@ -160,7 +170,14 @@ def ciruclarHvsM(año,tipo,numero_territorio):
                 text="Hombres vs Mujeres todos los Delitos Año " + str(año),
                 x=-0.3,
                 y=1.15,
-                font=dict(size=12),
+                font=dict(size=14),
+                showarrow=False,
+            ),
+            dict(
+                text='<b>' + terri + '</b>',
+                x=-0.3,
+                y=1.09,
+                font=dict(size=14),
                 showarrow=False,
             )
         ],
@@ -172,8 +189,9 @@ def ciruclarHvsM(año,tipo,numero_territorio):
     return fig
 
 def histogramSxE(numero_territorio):
+    numero_territorio=int(numero_territorio)
     df = pd.read_excel(nConst.EXCEL_PATH_SE[numero_territorio])
-    
+    conector= ''
     # Filtrar los datos
     listafiltrada = df[df['Edad'] != 'Total']
     listafiltrada = listafiltrada[listafiltrada['Sexo'] == 'TOTAL']
@@ -196,16 +214,22 @@ def histogramSxE(numero_territorio):
     df_melted = df_melted[df_melted['Año'] != 'Tipo Participante']
     df_melted = df_melted[df_melted['Año'] != 'Sexo']
     df_melted = df_melted[df_melted['Edad'] != 'No identifica']
+
+    if(numero_territorio==0):
+        conector=' en '
+    else:
+        conector=' en la '
     
+    nConst.TERRITORIO[numero_territorio]
     # Crear el histograma
     fig = px.histogram(df_melted, x='Edad', y='Cantidad', color='Año', category_orders={'Año': [2005, 2022]})
     fig.update_layout(
-        title='Histograma de Víctimas de Delitos por Edades',
+        title='Histograma de Víctimas de Delitos por Edades' + conector + nConst.TERRITORIO[numero_territorio],
         xaxis_title='Cantidad de Víctimas',
         yaxis_title='Frecuencia',
         barmode='group'
     )
-    
+
     return fig
 
 

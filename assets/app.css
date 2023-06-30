@@ -161,6 +161,11 @@ background-color: #f2f2f2;
   background-color: #eaeaea;
 }
 
+.histoSE{
+  padding: 10px;
+  height: 25vh;
+  background-color: #eaeaea;
+}
 /* Estilos generales */
 body {
   font-family: Arial, sans-serif;

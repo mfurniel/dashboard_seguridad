@@ -27,12 +27,19 @@ app.layout = html.Div([
         dcc.Dropdown(
         id='drop2',
         options= nConst.OPCIONES_DELITOS,
-        value=nConst.GRUPOS_DELITOS[0],  # Valor inicial seleccionado
-        placeholder=nConst.GRUPOS_DELITOS[0],
+        value='Delitos de mayor connotación social',  # Valor inicial seleccionado
+        placeholder='Grupo Delictual o Delito',
+        className='custom-dropdown' 
+        ),
+        dcc.Dropdown(
+        id='drop3',
+        options= nConst.OPCIONES_ANYOS,
+        value='2022',  # Valor inicial seleccionado
+        placeholder='Año',
         className='custom-dropdown' 
         ),
         html.Div([
-            html.Span('Ultima Actualización: 01/06/2023'),
+            html.Span('Ultima Actualización: 30/06/2023'),
             html.Span('Datos: CEAD "Centro de Estudios y Análisis del Delito"'),
         ], className='info'),
     ], className='barra-superior'),
@@ -98,24 +105,24 @@ app.layout = html.Div([
             html.Div([
                 html.Div([
                     dcc.Graph(
-                        id='circular-barra-victima-nacinal',
-                        figure=graf.ciruclarHvsM('2018','VICTIMA',0)
+                        id='circularbarravictimanacional',
+                        figure=graf.ciruclarHvsM('2022','VICTIMA',0)
                     ),
                 ], className='cNacionalva'),
                 html.Div(
                     dcc.Graph(
-                        id='circular-barra-vitimario-nacional',
-                        figure=graf.ciruclarHvsM('2018','VICTIMARIO',0)
+                        id='circularbarravictimarionacional',
+                        figure=graf.ciruclarHvsM('2022','VICTIMARIO',0)
                     ), className='cNacionalvo'),
                 html.Div([
                     dcc.Graph(
-                        id='circular-barra-victima-regional',
+                        id='circularbarravictimaregional',
                         figure=graf.ciruclarHvsM('2022','VICTIMA',13)
                     ),
                 ], className='cRegionalva'),
                 html.Div(
                     dcc.Graph(
-                        id='circular-barra-vitimario-regional',
+                        id='circularbarravictimarioregional',
                         figure=graf.ciruclarHvsM('2022','VICTIMARIO',13)
                     ), className='cRegionalvo')
             ], className='fila'),
@@ -167,7 +174,34 @@ def update_nacional_delito(input_value1, input_value2):
 def update_output(value):
     return graf.barrasDelitosNacional(False,value)
     
+from dash.dependencies import Output, Input
 
+@app.callback(
+    [Output(component_id='circularbarravictimanacional', component_property='figure'),
+     Output(component_id='circularbarravictimarionacional', component_property='figure'),
+     Output(component_id='circularbarravictimaregional', component_property='figure'),
+     Output(component_id='circularbarravictimarioregional', component_property='figure')],
+     [Input(component_id='drop1', component_property='value'),
+     Input(component_id='drop3', component_property='value')]
+)
+def updateciculos(input_value1, input_value2):
+    # print(input_value1)
+    # print(input_value2)
+    # Lógica para actualizar las propiedades de los cuatro outputs según el valor del input
+    # Retorna los valores actualizados para cada una de las propiedades de los outputs
+    valor1 = graf.ciruclarHvsM(input_value2,'VICTIMA',0)
+    valor2 = graf.ciruclarHvsM(input_value2,'VICTIMARIO',0)
+    valor3 = graf.ciruclarHvsM(input_value2,'VICTIMA',input_value1)
+    valor4 = graf.ciruclarHvsM(input_value2,'VICTIMARIO',input_value1)
+    return valor1, valor2, valor3, valor4
+
+@app.callback(
+    Output(component_id='histogramaSE', component_property='figure'),
+    Input(component_id='drop1', component_property='value')
+)
+def upadte_histo(input_value):
+    fig = graf.histogramSxE(input_value)
+    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
