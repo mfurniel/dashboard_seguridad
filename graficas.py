@@ -115,7 +115,10 @@ def lineChartCDDA(numero_territorio,delito_buscado):
         conector=' en la '
 
     fig.update_layout(
-        title=delito_buscado + conector + nConst.TERRITORIO[numero_territorio],
+        title= {
+           'text':'<span style="color: #2cc0be ;">' + delito_buscado + '</span>'+ conector + nConst.TERRITORIO[numero_territorio],
+        },
+        # delito_buscado + conector + nConst.TERRITORIO[numero_territorio],
         xaxis=dict(title='Años'),
         yaxis=dict(title='Cantidad de ' + delito_buscado)
     )
@@ -188,14 +191,14 @@ def ciruclarHvsM(año,tipo,numero_territorio):
     # Mostrar el gráfico
     return fig
 
-def histogramSxE(numero_territorio):
+def histogramSxE(numero_territorio,quien):
     numero_territorio=int(numero_territorio)
     df = pd.read_excel(nConst.EXCEL_PATH_SE[numero_territorio])
     conector= ''
     # Filtrar los datos
     listafiltrada = df[df['Edad'] != 'Total']
     listafiltrada = listafiltrada[listafiltrada['Sexo'] == 'TOTAL']
-    listafiltrada = listafiltrada[listafiltrada['Tipo Participante'] == 'VICTIMA']
+    listafiltrada = listafiltrada[listafiltrada['Tipo Participante'] == quien]
     
     # Eliminar los años no deseados
     df_melted = pd.melt(listafiltrada, id_vars=['Edad'], var_name='Año', value_name='Cantidad')
@@ -219,12 +222,24 @@ def histogramSxE(numero_territorio):
         conector=' en '
     else:
         conector=' en la '
-    
+
+    if quien == 'VICTIMA':
+        title_color = '#2cc0be'  # Verde
+    else:
+        title_color = '#572364'  # Rojo
+
+    quien = quien.capitalize().lower()
+    quien = quien.capitalize()
+    quien = quien+'s'
+
     nConst.TERRITORIO[numero_territorio]
     # Crear el histograma
     fig = px.histogram(df_melted, x='Edad', y='Cantidad', color='Año', category_orders={'Año': [2005, 2022]})
     fig.update_layout(
-        title='Histograma de Víctimas de Delitos por Edades' + conector + nConst.TERRITORIO[numero_territorio],
+        title={
+            'text':'Histograma ' +'<span style="color: '+ title_color+' ;">'+ quien +'</span>'+ ' de Delitos por Edades '+ conector + nConst.TERRITORIO[numero_territorio],
+        },
+        #'Histograma de Víctimas de Delitos por Edades' + conector + nConst.TERRITORIO[numero_territorio],
         xaxis_title='Cantidad de Víctimas',
         yaxis_title='Frecuencia',
         barmode='group'

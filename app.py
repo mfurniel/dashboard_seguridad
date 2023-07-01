@@ -131,7 +131,16 @@ app.layout = html.Div([
                 html.Div([
                     dcc.Graph(
                             id='histogramaSE',
-                            figure=graf.histogramSxE(0)
+                            figure=graf.histogramSxE(0,'VICTIMA')
+                    ),    
+                ], className='histoSE'),
+            # html.Div('Contenido graf 2 inmigracion', className='inmigracion')
+            ], className='filasingular'),
+             html.Div([
+                html.Div([
+                    dcc.Graph(
+                            id='histogramaSEvictiamrios',
+                            figure=graf.histogramSxE(0,'VICTIMARIO')
                     ),    
                 ], className='histoSE'),
             # html.Div('Contenido graf 2 inmigracion', className='inmigracion')
